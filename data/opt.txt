@@ -1,0 +1,6 @@
+data1  412
+data2  650
+data3  591
+data4  727
+data5  654
+data6  780
