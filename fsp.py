@@ -21,7 +21,7 @@ def loadData(path):
 def getOrder(zad):
     kolejnosc = []
     for i in range(0, len(zad)):
-        kolejnosc.append(zad[i][3])
+        kolejnosc.append(zad[i][-1])
     return kolejnosc
 
 
