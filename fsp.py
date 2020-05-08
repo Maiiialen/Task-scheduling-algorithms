@@ -18,6 +18,7 @@ def loadData(path):
             maszyny.append(int(linia[j]))
         maszyny.append(i)
         zadania.append(maszyny)
+        #print(zadania)
     plik.close()
 
     return zadania
@@ -57,6 +58,16 @@ def calculate_Cmax(zad):
 
     return C[-1][-1]
 
+def minq(z):
+    minimum = math.inf
+    minimum_indeks = []
+    for i in range(0, len(z)):
+        for j in range(0, len(z[i])-1):
+            if z[i][j] < minimum:
+                minimum = z[i][j]
+                minimum_indeks = [i, z[i][2]]
+    return minimum_indeks
+
 def bruteForce(zad):
     perms = list(permutations(zad,r=len(zad)))
     Cmin = math.inf
@@ -66,6 +77,24 @@ def bruteForce(zad):
             Cmin = C
     return Cmin
 
-zadania = loadData("data/data004.txt")
+def Johnson(zad):
+    l=1
+    k=len(zad)
+    knownValues = {}
+    indeks = []
+    while zad:
+        indeks = minq(zad)
+        if zad[indeks[0]][0]<zad[indeks[0]][1]:
+            knownValues[l] = indeks[1]
+            l += 1
+        else:
+            knownValues[k] = indeks[1]
+            k -= 1
+        zad.pop(indeks[0])
+    return knownValues
 
-print(bruteForce(copy.deepcopy(zadania)))
+
+zadania = loadData("data/data001.txt")
+
+#print(bruteForce(copy.deepcopy(zadania)))
+print(Johnson(copy.deepcopy(zadania)))
