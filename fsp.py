@@ -80,21 +80,22 @@ def bruteForce(zad):
 def Johnson(zad):
     l=1
     k=len(zad)
-    knownValues = {}
+    posortowaneZadania = [None]*k
     indeks = []
     while zad:
         indeks = minq(zad)
         if zad[indeks[0]][0]<zad[indeks[0]][1]:
-            knownValues[l] = indeks[1]
+            posortowaneZadania[l-1] = zad[indeks[0]]
             l += 1
         else:
-            knownValues[k] = indeks[1]
+            posortowaneZadania[k-1] = zad[indeks[0]]
             k -= 1
         zad.pop(indeks[0])
-    return knownValues
+    return posortowaneZadania
 
 
-zadania = loadData("data/data001.txt")
+zadania = loadData("data/data005.txt")
 
 #print(bruteForce(copy.deepcopy(zadania)))
 print(Johnson(copy.deepcopy(zadania)))
+print(calculate_Cmax(Johnson(copy.deepcopy(zadania))))
