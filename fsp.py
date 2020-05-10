@@ -133,7 +133,7 @@ def startBranchAndBound(zad):
         pi.append(j)
         zad.remove(j)
         if(len(zad) != 0):
-            LB = Bound3(copy.deepcopy(pi), copy.deepcopy(zad))
+            LB = Bound4(copy.deepcopy(pi), copy.deepcopy(zad))
             if(LB <= UB):
                 for j in zad:
                     BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
@@ -169,6 +169,17 @@ def Bound3(pi, zad):
             LBmax = LB
     return LBmax
 
+def Bound4(pi, zad):
+    LBmax = 0
+    LB = 0
+    x = len(pi)-1
+    C = calculate_C(copy.deepcopy(pi))
+    for i in range(0, len(zad[0])-1):
+        LB = C[x][i] + sumaP(copy.deepcopy(zad), i) + minSumaP(copy.deepcopy(zad), i)
+        if LB > LBmax:
+            LBmax = LB
+    return LBmax
+
 def sumaP(zad, i):
     suma = 0
     for j in zad:
@@ -186,6 +197,18 @@ def sumaMinP(zad, i):
                 minP = p
         suma += minP
     return suma
+
+def minSumaP(zad, i):
+    minSuma = math.inf
+    m = len(zad[0])-1
+    for j in zad:
+        suma = 0
+        for k in range(i+1, m):
+            suma += j[k]
+        if minSuma > suma:
+            minSuma = suma
+    return minSuma
+
 
 zadania = loadData("data/data003.txt")
 
