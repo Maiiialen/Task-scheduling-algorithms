@@ -58,6 +58,35 @@ def calculate_Cmax(zad):
 
     return C[-1][-1]
 
+def calculate_C(zad):
+    S = []
+    C = []
+    Szad = []
+    Czad = []
+
+    Szad.append(0)
+    Czad.append(zad[0][0])
+
+    for i in range(0, len(zad)):
+        for j in range(0, len(zad[i])-1):
+            if i == 0 and j != 0:
+                Szad.append(Czad[j-1])
+                Czad.append(Szad[j] + zad[i][j])
+            elif i != 0:
+                if j == 0:
+                    Szad.append(C[i-1][0])
+                    Czad.append(Szad[0] + zad[i][0])
+                else:
+                    Szad.append(max(Czad[j-1], C[i-1][j]))
+                    Czad.append(Szad[j] + zad[i][j])
+
+        S.append(Szad.copy())
+        C.append(Czad.copy())
+        Szad.clear()
+        Czad.clear()
+
+    return C
+
 def minq(z):
     minimum = math.inf
     minimum_indeks = []
@@ -93,9 +122,74 @@ def Johnson(zad):
         zad.pop(indeks[0])
     return posortowaneZadania
 
+def startBranchAndBound(zad):
+    UB = math.inf
+    pi = []
+    pistar = []
+    
+    def BranchAndBound(j, zad, pi):
+        nonlocal pistar
+        nonlocal UB
+        pi.append(j)
+        zad.remove(j)
+        if(len(zad) != 0):
+            LB = Bound3(copy.deepcopy(pi), copy.deepcopy(zad))
+            if(LB <= UB):
+                for j in zad:
+                    BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
+        else:
+            Cmax = calculate_Cmax(copy.deepcopy(pi))
+            if(Cmax < UB):
+                UB = Cmax
+                pistar = pi
 
-zadania = loadData("data/data005.txt")
+    for j in zad:
+        BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
+    return pistar
+
+def Bound1(pi, zad):
+    LBmax = 0
+    LB = 0
+    x = len(pi)-1
+    C = calculate_C(copy.deepcopy(pi))
+    for i in range(0, len(zad[0])-1):
+        LB = C[x][i] + sumaP(copy.deepcopy(zad), i)
+        if LB > LBmax:
+            LBmax = LB
+    return LBmax
+
+def Bound3(pi, zad):
+    LBmax = 0
+    LB = 0
+    x = len(pi)-1
+    C = calculate_C(copy.deepcopy(pi))
+    for i in range(0, len(zad[0])-1):
+        LB = C[x][i] + sumaP(copy.deepcopy(zad), i) + sumaMinP(copy.deepcopy(zad), i)
+        if LB > LBmax:
+            LBmax = LB
+    return LBmax
+
+def sumaP(zad, i):
+    suma = 0
+    for j in zad:
+        suma += j[i]
+    return suma
+
+def sumaMinP(zad, i):
+    suma = 0
+    m = len(zad[0])-1
+    for k in range(i+1, m):
+        minP = math.inf
+        for j in zad:
+            p = j[k]
+            if p < minP:
+                minP = p
+        suma += minP
+    return suma
+
+zadania = loadData("data/data002.txt")
 
 #print(bruteForce(copy.deepcopy(zadania)))
-print(Johnson(copy.deepcopy(zadania)))
-print(calculate_Cmax(Johnson(copy.deepcopy(zadania))))
+#print(Johnson(copy.deepcopy(zadania)))
+#print(calculate_Cmax(Johnson(copy.deepcopy(zadania))))
+print(calculate_Cmax(startBranchAndBound(copy.deepcopy(zadania))))
