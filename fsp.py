@@ -187,7 +187,7 @@ def sumaMinP(zad, i):
         suma += minP
     return suma
 
-zadania = loadData("data/data002.txt")
+zadania = loadData("data/data003.txt")
 
 #print(bruteForce(copy.deepcopy(zadania)))
 #print(Johnson(copy.deepcopy(zadania)))
