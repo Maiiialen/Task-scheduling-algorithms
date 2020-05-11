@@ -123,6 +123,7 @@ def Johnson(zad):
     return posortowaneZadania
 
 def startBranchAndBound(zad):
+    zadania = copy.deepcopy(zad)
     UB = math.inf
     pi = []
     pistar = []
@@ -133,7 +134,8 @@ def startBranchAndBound(zad):
         pi.append(j)
         zad.remove(j)
         if(len(zad) != 0):
-            LB = Bound4(copy.deepcopy(pi), copy.deepcopy(zad))
+            LB = Bound2(copy.deepcopy(pi), copy.deepcopy(zad), copy.deepcopy(zadania))
+            #LB = Bound4(copy.deepcopy(pi), copy.deepcopy(zad))
             if(LB <= UB):
                 for j in zad:
                     BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
@@ -154,6 +156,17 @@ def Bound1(pi, zad):
     C = calculate_C(copy.deepcopy(pi))
     for i in range(0, len(zad[0])-1):
         LB = C[x][i] + sumaP(copy.deepcopy(zad), i)
+        if LB > LBmax:
+            LBmax = LB
+    return LBmax
+
+def Bound2(pi, zad, zadania):
+    LBmax = 0
+    LB = 0
+    x = len(pi)-1
+    C = calculate_C(copy.deepcopy(pi))
+    for i in range(0, len(zad[0])-1):
+        LB = C[x][i] + sumaP(copy.deepcopy(zad), i) + sumaMinP(copy.deepcopy(zadania), i)
         if LB > LBmax:
             LBmax = LB
     return LBmax
