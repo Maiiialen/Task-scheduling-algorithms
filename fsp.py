@@ -126,7 +126,6 @@ def Johnson(zad):
 
 def startBranchAndBound(zad):
     zadania = copy.deepcopy(zad)
-    #UB = math.inf
     UB = initRandomUB(copy.deepcopy(zad), 3)
     pi = []
     pistar = []
@@ -138,7 +137,7 @@ def startBranchAndBound(zad):
         zad.remove(j)
         if(len(zad) != 0):
             #LB = Bound2(copy.deepcopy(pi), copy.deepcopy(zad), copy.deepcopy(zadania))
-            LB = Bound1(copy.deepcopy(pi), copy.deepcopy(zad))
+            LB = Bound4(copy.deepcopy(pi), copy.deepcopy(zad))
             if(LB <= UB):
                 for j in zad:
                     BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
@@ -233,94 +232,116 @@ def minSumaP(zad, i):
             minSuma = suma
     return minSuma
 
-
+# - - - DATA 1 - - - #
 zadania = loadData("data/data001.txt")
-print("Data001")
+print(" - - - Data001 - - - ")
+
 print("BruteForce")
 start = timeit.default_timer()
 bruteForce(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
+
 print("Johnson")
 start = timeit.default_timer()
 Johnson(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-print("BranchNBound1")
+
+print("BranchNBound_UB3_LB4")
 start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-'''
+
+# - - - DATA 2 - - - #
 zadania = loadData("data/data002.txt")
-print("Data002")
+print(" - - - Data002 - - - ")
+
 print("BruteForce")
 start = timeit.default_timer()
 bruteForce(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-print("BranchNBound1")
+
+print("BranchNBound_UB3_LB4")
 start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-'''
+
+# - - - DATA 3 - - - #
 zadania = loadData("data/data003.txt")
-print("Data003")
+print(" - - - Data003 - - - ")
+
 print("BruteForce")
 start = timeit.default_timer()
 bruteForce(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
+
 print("Johnson")
 start = timeit.default_timer()
 Johnson(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-print("BranchNBound1")
+
+print("BranchNBound_UB3_LB4")
 start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 
+# - - - DATA 4 - - - #
 zadania = loadData("data/data004.txt")
-print("Data004")
+print(" - - - Data004 - - - ")
+
 print("BruteForce")
 start = timeit.default_timer()
 bruteForce(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-print("BranchNBound1")
+
+print("BranchNBound_UB3_LB4")
 start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 
+# - - - DATA 5 - - - #
 zadania = loadData("data/data005.txt")
-print("Data005")
-#start = timeit.default_timer()
-#bruteForce(copy.deepcopy(zadania))
-#end = timeit.default_timer()
-#print("Czas wykonania: {:f}\n".format(end-start))
+print(" - - - Data005 - - - ")
+
+print("BruteForce")
+start = timeit.default_timer()
+bruteForce(copy.deepcopy(zadania))
+end = timeit.default_timer()
+print("Czas wykonania: {:f}\n".format(end-start))
+
 print("Johnson")
 start = timeit.default_timer()
 Johnson(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-'''
+
+print("BranchNBound_UB3_LB4")
 start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 
+# - - - DATA 6 - - - #
 zadania = loadData("data/data006.txt")
-print("Data006")
-#start = timeit.default_timer()
-#bruteForce(copy.deepcopy(zadania))
-#end = timeit.default_timer()
-#print("Czas wykonania: {:f}\n".format(end-start))
+print(" - - - Data006 - - - ")
+
+print("BruteForce")
 start = timeit.default_timer()
-startBranchAndBound(copy.deepcopy(zadania)))
+bruteForce(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-'''
+
+print("BranchNBound_UB3_LB4")
+start = timeit.default_timer()
+startBranchAndBound(copy.deepcopy(zadania))
+end = timeit.default_timer()
+print("Czas wykonania: {:f}\n".format(end-start))
