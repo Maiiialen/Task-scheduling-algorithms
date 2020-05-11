@@ -2,6 +2,8 @@ import copy
 from itertools import permutations
 import math
 import timeit
+from numpy import random
+import numpy as np
 
 
 def loadData(path):
@@ -124,7 +126,8 @@ def Johnson(zad):
 
 def startBranchAndBound(zad):
     zadania = copy.deepcopy(zad)
-    UB = math.inf
+    #UB = math.inf
+    UB = initRandomUB(copy.deepcopy(zad), 3)
     pi = []
     pistar = []
     
@@ -148,6 +151,14 @@ def startBranchAndBound(zad):
     for j in zad:
         BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
     return pistar
+
+def initRandomUB(zad, k):
+    Cmin = math.inf
+    for i in range(0, k):
+        C = calculate_Cmax(np.random.permutation(zad))
+        if C < Cmin:
+            Cmin = C
+    return Cmin
 
 def Bound1(pi, zad):
     LBmax = 0
@@ -240,7 +251,7 @@ start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-
+'''
 zadania = loadData("data/data002.txt")
 print("Data002")
 print("BruteForce")
@@ -253,7 +264,7 @@ start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
-
+'''
 zadania = loadData("data/data003.txt")
 print("Data003")
 print("BruteForce")
@@ -313,4 +324,3 @@ startBranchAndBound(copy.deepcopy(zadania)))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 '''
-
