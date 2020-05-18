@@ -89,14 +89,14 @@ def calculate_C(zad):
 
     return C
 
-def minq(z):
+def minp(z):
     minimum = math.inf
-    minimum_indeks = []
+    minimum_indeks = -1
     for i in range(0, len(z)):
         for j in range(0, len(z[i])-1):
             if z[i][j] < minimum:
                 minimum = z[i][j]
-                minimum_indeks = [i, z[i][2]]
+                minimum_indeks = i
     return minimum_indeks
 
 def bruteForce(zad):
@@ -112,16 +112,16 @@ def Johnson(zad):
     l=1
     k=len(zad)
     posortowaneZadania = [None]*k
-    indeks = []
+    indeks = -1
     while zad:
-        indeks = minq(zad)
-        if zad[indeks[0]][0]<zad[indeks[0]][1]:
-            posortowaneZadania[l-1] = zad[indeks[0]]
+        indeks = minp(zad)
+        if zad[indeks][0]<zad[indeks][1]:
+            posortowaneZadania[l-1] = zad[indeks]
             l += 1
         else:
-            posortowaneZadania[k-1] = zad[indeks[0]]
+            posortowaneZadania[k-1] = zad[indeks]
             k -= 1
-        zad.pop(indeks[0])
+        zad.pop(indeks)
     return posortowaneZadania
 
 def startBranchAndBound(zad):
@@ -232,6 +232,7 @@ def minSumaP(zad, i):
             minSuma = suma
     return minSuma
 
+'''
 # - - - DATA 1 - - - #
 zadania = loadData("data/data001.txt")
 print(" - - - Data001 - - - ")
@@ -242,9 +243,10 @@ bruteForce(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 
+
 print("Johnson")
 start = timeit.default_timer()
-Johnson(copy.deepcopy(zadania))
+print(calculate_Cmax(Johnson(copy.deepcopy(zadania))))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 
@@ -308,6 +310,7 @@ startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
 
+Duuugo (oprocz Johnosna)
 # - - - DATA 5 - - - #
 zadania = loadData("data/data005.txt")
 print(" - - - Data005 - - - ")
@@ -345,3 +348,4 @@ start = timeit.default_timer()
 startBranchAndBound(copy.deepcopy(zadania))
 end = timeit.default_timer()
 print("Czas wykonania: {:f}\n".format(end-start))
+'''
