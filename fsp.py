@@ -320,7 +320,7 @@ def NEHplus(zad):
         pi = copy.deepcopy(pistar)
         poprzednioWybrane = Wsorted.pop()
 
-        x = selectX(copy.deepcopy(pistar), poprzednioWybrane)
+        x = selectX(copy.deepcopy(pistar), poprzednioWybrane[1])
         pi.remove(x)
         for l in range(0, k):
             pi.insert(l, x)
@@ -335,14 +335,32 @@ def NEHplus(zad):
 
     return pistar
 
-def selectX(zad, nieTo):
+def selectX(zad, nieToNumer):
     ### TODO ###
-    return zad[0]
+    CmaxStart = calculate_Cmax(copy.deepcopy(zad))
+    index = -1
+
+    for l in range(0, len(zad)):
+        if zad[l][-1] != nieToNumer:
+            usunieteZad = zad.pop(l)
+            Cmax = calculate_Cmax(copy.deepcopy(zad))
+            zad.insert(l, usunieteZad)
+
+            if Cmax < CmaxStart:
+                CmaxStart = Cmax
+                index = l
+        
+
+    return zad[index]
 
 
 print(" - - - NEH - - - ")
-zadania = loadData("data/data3.txt")
+#zadania = loadData("data/data2.txt")
+zadania = loadDataB("dataB/ta120.txt")
+
 print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+
 
 #print(startBranchAndBound(copy.deepcopy(zadania)))
 
