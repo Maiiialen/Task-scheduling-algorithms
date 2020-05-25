@@ -293,6 +293,51 @@ def sortP(tabSumP):
         if zmiana == False:
             return tabSumP
 
+def NEHplus(zad):
+    k = 1
+    W = []
+    pistar = []
+    pi = []
+
+    for zadanie in zad:
+        sumaP = 0
+        for i in range(0, len(zadanie)-1):
+            sumaP += zadanie[i]
+        W.append([sumaP, zadanie[-1]]) 
+    Wsorted = sortP(W)
+
+    while(len(W) != 0):
+        idxMaxP = Wsorted[-1][1] - 1
+        zadMaxP = zad[idxMaxP]
+        for l in range(0, k):
+            pi.insert(l, zadMaxP)
+            if l == 0:
+                pistar.insert(l, zadMaxP)
+            if(calculate_Cmax(copy.deepcopy(pi)) < calculate_Cmax(copy.deepcopy(pistar))):
+                pistar = copy.deepcopy(pi)
+            pi.pop(l)
+
+        pi = copy.deepcopy(pistar)
+        poprzednioWybrane = Wsorted.pop()
+
+        x = selectX(copy.deepcopy(pistar), poprzednioWybrane)
+        pi.remove(x)
+        for l in range(0, k):
+            pi.insert(l, x)
+            if l == 0:
+                pistar.insert(l, x)
+            if(calculate_Cmax(copy.deepcopy(pi)) < calculate_Cmax(copy.deepcopy(pistar))):
+                pistar = copy.deepcopy(pi)
+            pi.pop(l)
+
+        pi = copy.deepcopy(pistar)
+        k += 1
+
+    return pistar
+
+def selectX(zad, nieTo):
+    ### TODO ###
+    return zad[0]
 
 
 print(" - - - NEH - - - ")
