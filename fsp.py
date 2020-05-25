@@ -138,7 +138,7 @@ def startBranchAndBound(zad):
         if(len(zad) != 0):
             #LB = Bound2(copy.deepcopy(pi), copy.deepcopy(zad), copy.deepcopy(zadania))
             LB = Bound4(copy.deepcopy(pi), copy.deepcopy(zad))
-            if(LB <= UB):
+            if(LB < UB):
                 for j in zad:
                     BranchAndBound(j, copy.deepcopy(zad), copy.deepcopy(pi))
         else:
@@ -234,6 +234,8 @@ def minSumaP(zad, i):
 
 def NEH(zad):
     pass
+
+
 
 '''
 # - - - DATA 1 - - - #
