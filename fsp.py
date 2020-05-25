@@ -232,6 +232,9 @@ def minSumaP(zad, i):
             minSuma = suma
     return minSuma
 
+def NEH(zad):
+    pass
+
 '''
 # - - - DATA 1 - - - #
 zadania = loadData("data/data001.txt")
