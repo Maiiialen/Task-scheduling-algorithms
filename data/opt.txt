@@ -1,6 +1,11 @@
-data1  412
-data2  650
-data3  591
-data4  727
-data5  654
-data6  780
+data001  412
+data002  650
+data003  591
+data004  727
+data005  654
+data006  780
+
+Wyniki NEH:
+data1 32
+data2 1286
+data3 1365

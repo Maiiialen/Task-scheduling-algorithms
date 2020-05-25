@@ -256,7 +256,7 @@ def NEH(zad):
     k = 1
     W = []
     pistar = []
-    pi = copy.deepcopy(zad)
+    pi = []
 
     for zadanie in zad:
         sumaP = 0
@@ -270,12 +270,14 @@ def NEH(zad):
         zadMaxP = zad[idxMaxP]
         for l in range(0, k):
             pi.insert(l, zadMaxP)
+            if l == 0:
+                pistar.insert(l, zadMaxP)
             if(calculate_Cmax(copy.deepcopy(pi)) < calculate_Cmax(copy.deepcopy(pistar))):
                 pistar = copy.deepcopy(pi)
             pi.pop(l)
 
-        pistar = copy.deepcopy(pi)
-        Wsorted.pop(idxMaxP)
+        pi = copy.deepcopy(pistar)
+        Wsorted.pop()
         k += 1
 
     return pistar
@@ -293,13 +295,17 @@ def sortP(tabSumP):
 
 
 
+print(" - - - NEH - - - ")
+zadania = loadData("data/data3.txt")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
 
+#print(startBranchAndBound(copy.deepcopy(zadania)))
+
+'''
 # - - - DATA 1 - - - #
-zadania = loadDataB("dataB/ta001.txt")
+zadania = loadData("data/data006.txt")
 print(" - - - Data001 - - - ")
 
-NEH(copy.deepcopy(zadania))
-'''
 print("BruteForce")
 start = timeit.default_timer()
 bruteForce(copy.deepcopy(zadania))
