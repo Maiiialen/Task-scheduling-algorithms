@@ -20,7 +20,24 @@ def loadData(path):
             maszyny.append(int(linia[j]))
         maszyny.append(i)
         zadania.append(maszyny)
-        #print(zadania)
+    plik.close()
+
+    return zadania
+
+def loadDataB(path):
+    plik = open(path, "r")
+    linie = plik.readlines()
+    n = int(linie[1].split()[0])
+    m = int(linie[1].split()[1])
+
+    zadania = []
+    for i in range(2, n+2):
+        linia = linie[i].split()
+        maszyny = []
+        for j in range(1, 2*m, 2):
+            maszyny.append(int(linia[j]))
+        maszyny.append(i-1)
+        zadania.append(maszyny)
     plik.close()
 
     return zadania
@@ -32,6 +49,9 @@ def getOrder(zad):
     return kolejnosc
 
 def calculate_Cmax(zad):
+    if len(zad) == 0:
+        return math.inf
+
     S = []
     C = []
     Szad = []
@@ -233,15 +253,53 @@ def minSumaP(zad, i):
     return minSuma
 
 def NEH(zad):
-    pass
+    k = 1
+    W = []
+    pistar = []
+    pi = copy.deepcopy(zad)
+
+    for zadanie in zad:
+        sumaP = 0
+        for i in range(0, len(zadanie)-1):
+            sumaP += zadanie[i]
+        W.append([sumaP, zadanie[-1]]) 
+    Wsorted = sortP(W)
+
+    while(len(W) != 0):
+        idxMaxP = Wsorted[-1][1] - 1
+        zadMaxP = zad[idxMaxP]
+        for l in range(0, k):
+            pi.insert(l, zadMaxP)
+            if(calculate_Cmax(copy.deepcopy(pi)) < calculate_Cmax(copy.deepcopy(pistar))):
+                pistar = copy.deepcopy(pi)
+            pi.pop(l)
+
+        pistar = copy.deepcopy(pi)
+        Wsorted.pop(idxMaxP)
+        k += 1
+
+    return pistar
+
+def sortP(tabSumP):
+    while True:
+        zmiana = False
+        for j in range(0, len(tabSumP)-1):
+            if tabSumP[j][0] > tabSumP[j+1][0]:
+                tabSumP[j], tabSumP[j+1] = tabSumP[j+1], tabSumP[j]
+                zmiana = True
+
+        if zmiana == False:
+            return tabSumP
 
 
 
-'''
+
 # - - - DATA 1 - - - #
-zadania = loadData("data/data001.txt")
+zadania = loadDataB("dataB/ta001.txt")
 print(" - - - Data001 - - - ")
 
+NEH(copy.deepcopy(zadania))
+'''
 print("BruteForce")
 start = timeit.default_timer()
 bruteForce(copy.deepcopy(zadania))
