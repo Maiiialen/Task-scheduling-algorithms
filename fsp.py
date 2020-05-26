@@ -313,20 +313,20 @@ def NEHplus(zad):
             pi.insert(l, zadMaxP)
             if l == 0:
                 pistar.insert(l, zadMaxP)
-            if(calculate_Cmax(copy.deepcopy(pi)) < calculate_Cmax(copy.deepcopy(pistar))):
+            if(calculate_Cmax(pi) < calculate_Cmax(pistar)):
                 pistar = copy.deepcopy(pi)
             pi.pop(l)
 
         pi = copy.deepcopy(pistar)
         poprzednioWybrane = Wsorted.pop()
 
-        x = selectX(copy.deepcopy(pistar), poprzednioWybrane[1])
+        x = selectX4(copy.deepcopy(pistar), poprzednioWybrane[1])
         pi.remove(x)
         for l in range(0, k):
             pi.insert(l, x)
             if l == 0:
                 pistar.insert(l, x)
-            if(calculate_Cmax(copy.deepcopy(pi)) < calculate_Cmax(copy.deepcopy(pistar))):
+            if(calculate_Cmax(pi) < calculate_Cmax(pistar)):
                 pistar = copy.deepcopy(pi)
             pi.pop(l)
 
@@ -335,15 +335,17 @@ def NEHplus(zad):
 
     return pistar
 
-def selectX(zad, nieToNumer):
-    ### TODO ###
-    CmaxStart = calculate_Cmax(copy.deepcopy(zad))
+def selectX1(zad, nieToNumer):
+    pass
+
+def selectX4(zad, nieToNumer):
+    CmaxStart = calculate_Cmax(zad)
     index = -1
 
     for l in range(0, len(zad)):
         if zad[l][-1] != nieToNumer:
             usunieteZad = zad.pop(l)
-            Cmax = calculate_Cmax(copy.deepcopy(zad))
+            Cmax = calculate_Cmax(zad)
             zad.insert(l, usunieteZad)
 
             if Cmax < CmaxStart:
@@ -354,17 +356,19 @@ def selectX(zad, nieToNumer):
     return zad[index]
 
 
+
+
+# _____________ MAIN _____________ #
 print(" - - - NEH - - - ")
 #zadania = loadData("data/data2.txt")
-zadania = loadDataB("dataB/ta120.txt")
+zadania = loadDataB("dataB/ta010.txt")
 
 print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
 print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
 
 
-#print(startBranchAndBound(copy.deepcopy(zadania)))
 
-'''
+''' CZESC 1: BruteForce, Johnson, BnB
 # - - - DATA 1 - - - #
 zadania = loadData("data/data006.txt")
 print(" - - - Data001 - - - ")
