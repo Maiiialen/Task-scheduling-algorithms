@@ -320,7 +320,7 @@ def NEHplus(zad):
         pi = copy.deepcopy(pistar)
         poprzednioWybrane = Wsorted.pop()
 
-        x = selectX4(copy.deepcopy(pistar), poprzednioWybrane[1])
+        x = selectX2(copy.deepcopy(pistar), poprzednioWybrane[1])
         pi.remove(x)
         for l in range(0, k):
             pi.insert(l, x)
@@ -339,9 +339,8 @@ def selectX1(zad, nieToNumer):
     C = calculate_C(zad)
     pMax = C[-1][-1]
     indeksZ = len(zad)-1
-    indeksM = len(zad[0])-2
     i = indeksZ
-    j = indeksM
+    j = len(zad[0])-2
 
     while i != 0 and j != 0:
         if i > 0 and j > 0:
@@ -350,28 +349,24 @@ def selectX1(zad, nieToNumer):
                     if zad[i-1][-1] != nieToNumer:
                         pMax = zad[i-1][j]
                         indeksZ = i-1
-                        indeksM = j
                 i -= 1
             else:
                 if zad[i][j-1] > pMax:
                     if zad[i][-1] != nieToNumer:
                         pMax = zad[i][j-1]
                         indeksZ = i
-                        indeksM = j-1
                 j -= 1
         elif i == 0:
             if zad[i][j-1] > pMax:
                 if zad[i][-1] != nieToNumer:
                     pMax = zad[i][j-1]
                     indeksZ = i
-                    indeksM = j-1
             j -= 1
         else:
             if zad[i-1][j] > pMax:
                 if zad[i-1][-1] != nieToNumer:
                     pMax = zad[i-1][j]
                     indeksZ = i-1
-                    indeksM = j
             i -= 1
 
     return zad[indeksZ]
@@ -386,6 +381,43 @@ def selectX1(zad, nieToNumer):
                         indeksZ = i-1
                         indeksM = j
     '''
+
+def selectX2(zad, nieToNumer):
+    C = calculate_C(zad)
+    sumaMax = 0
+    suma = C[-1][-1]
+
+    indeksZ = len(zad)-1
+    i = indeksZ
+    j = len(zad[0])-2
+
+    while i != 0 and j != 0:
+        if i > 0 and j > 0:
+            if C[i-1][j] >= C[i][j-1]:
+                if zad[i][-1] != nieToNumer:
+                    if sumaMax < suma:
+                        sumaMax = suma
+                        indeksZ = i
+                i -= 1
+                suma = 0
+            else:
+                suma += zad[i][j-1]
+                indeksZ = i
+                j -= 1
+        elif i == 0:
+            suma += zad[i][j-1]
+            indeksZ = i
+            j -= 1
+        else:
+            if C[i-1][j] >= C[i][j-1]:
+                if zad[i][-1] != nieToNumer:
+                    if sumaMax < suma:
+                        sumaMax = suma
+                        indeksZ = i
+                i -= 1
+                suma = 0
+
+    return zad[indeksZ]
 
 def selectX4(zad, nieToNumer):
     CmaxStart = calculate_Cmax(zad)
