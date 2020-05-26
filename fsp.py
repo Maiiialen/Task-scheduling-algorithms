@@ -336,7 +336,56 @@ def NEHplus(zad):
     return pistar
 
 def selectX1(zad, nieToNumer):
-    pass
+    C = calculate_C(zad)
+    pMax = C[-1][-1]
+    indeksZ = len(zad)-1
+    indeksM = len(zad[0])-2
+    i = indeksZ
+    j = indeksM
+
+    while i != 0 and j != 0:
+        if i > 0 and j > 0:
+            if C[i-1][j] >= C[i][j-1]:
+                if zad[i-1][j] > pMax:
+                    if zad[i-1][-1] != nieToNumer:
+                        pMax = zad[i-1][j]
+                        indeksZ = i-1
+                        indeksM = j
+                i -= 1
+            else:
+                if zad[i][j-1] > pMax:
+                    if zad[i][-1] != nieToNumer:
+                        pMax = zad[i][j-1]
+                        indeksZ = i
+                        indeksM = j-1
+                j -= 1
+        elif i == 0:
+            if zad[i][j-1] > pMax:
+                if zad[i][-1] != nieToNumer:
+                    pMax = zad[i][j-1]
+                    indeksZ = i
+                    indeksM = j-1
+            j -= 1
+        else:
+            if zad[i-1][j] > pMax:
+                if zad[i-1][-1] != nieToNumer:
+                    pMax = zad[i-1][j]
+                    indeksZ = i-1
+                    indeksM = j
+            i -= 1
+
+    return zad[indeksZ]
+
+    '''
+    for i in range(len(zad)-1, 0, -1):
+        for j in range(len(zad[0])-2, 0, -1):
+            if i>0 and j>0:
+                if C[i-1][j] >= C[i][j-1]:
+                    if zad[i-1][j] > pMax:
+                        pMax = zad[i-1][j]
+                        indeksZ = i-1
+                        indeksM = j
+    '''
 
 def selectX4(zad, nieToNumer):
     CmaxStart = calculate_Cmax(zad)
@@ -359,11 +408,14 @@ def selectX4(zad, nieToNumer):
 
 
 # _____________ MAIN _____________ #
-print(" - - - NEH - - - ")
+
 #zadania = loadData("data/data2.txt")
 zadania = loadDataB("dataB/ta010.txt")
 
+print(" - - - NEH - - - ")
 print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+
+print(" - - - NEH+ - - - ")
 print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
 
 
