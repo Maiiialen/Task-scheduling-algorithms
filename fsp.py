@@ -4,6 +4,7 @@ import math
 import timeit
 from numpy import random
 import numpy as np
+import random
 
 
 def loadData(path):
@@ -473,8 +474,52 @@ def selectX4(zad, nieToNumer):
 
     return zad[index]
 
+def algorytmSA(zad):
+    pistar = []
+    n = len(zad)
+    T = 100                 # T0 = {100 | 1000 | 10000}
+    Tend = 0.01             # Tend = {0.01 | 0.001 | 0.0001}
+    pi = copy.deepcopy(zad) # pi = {neutralna | losowa | NEH}
+    L = n                   # L = {sqrt(n) | n | n^2}
+    x = T/10**3             # x = {T/10^3 | T/10^4 | T/10^5}
+    alfa = 0.97             # alfa = {0.97 | 0.95 | 0.90}
+    it = 0
+
+    while T > Tend:
+        for k in range(1, L):
+            i = random.randint(1, n)
+            j = random.randint(1, n)
+            pinew = moveInsert(copy.deepcopy(pi), i, j)
+
+            piCmax = calculate_Cmax(pi)
+            pinewCmax = calculate_Cmax(pinew)
+            if pinewCmax > piCmax:
+                r = random.random()
+                dCmax = piCmax - pinewCmax
+                if r >= math.exp(dCmax/T):
+                    pinew = copy.deepcopy(pi)
+
+            pi = copy.deepcopy(pinew)
+
+            if calculate_Cmax(pi) < calculate_Cmax(pistar):
+                pistar = copy.deepcopy(pi)
+        
+        #T = T - x
+        #T = alfa*T
+        T = T/(math.log(it+1))
+
+        it += 1
+
+    return pistar
 
 
+def moveSwap(zad, i, j):
+    zad[i], zad[j] = zad[j], zad[i]
+    return zad
+
+def moveInsert(zad, i, j):
+    zad.insert(j, zad.pop(i))
+    return zad
 
 # _____________ MAIN _____________ #
 
@@ -485,6 +530,9 @@ print(" - - - NEH - - - ")
 print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
 
 print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+
+print(" - - - SAA - - - ")
 print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
 
 
