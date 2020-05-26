@@ -320,7 +320,7 @@ def NEHplus(zad):
         pi = copy.deepcopy(pistar)
         poprzednioWybrane = Wsorted.pop()
 
-        x = selectX2(copy.deepcopy(pistar), poprzednioWybrane[1])
+        x = selectX4(copy.deepcopy(pistar), poprzednioWybrane[1])
         pi.remove(x)
         for l in range(0, k):
             pi.insert(l, x)
@@ -419,6 +419,43 @@ def selectX2(zad, nieToNumer):
 
     return zad[indeksZ]
 
+def selectX3(zad, nieToNumer):
+    C = calculate_C(zad)
+    sumaMax = 0
+    suma = 1
+
+    indeksZ = len(zad)-1
+    i = indeksZ
+    j = len(zad[0])-2
+
+    while i != 0 and j != 0:
+        if i > 0 and j > 0:
+            if C[i-1][j] >= C[i][j-1]:
+                if zad[i][-1] != nieToNumer:
+                    if sumaMax < suma:
+                        sumaMax = suma
+                        indeksZ = i
+                i -= 1
+                suma = 0
+            else:
+                suma += 1
+                indeksZ = i
+                j -= 1
+        elif i == 0:
+            suma += 1
+            indeksZ = i
+            j -= 1
+        else:
+            if C[i-1][j] >= C[i][j-1]:
+                if zad[i][-1] != nieToNumer:
+                    if sumaMax < suma:
+                        sumaMax = suma
+                        indeksZ = i
+                i -= 1
+                suma = 0
+
+    return zad[indeksZ]
+
 def selectX4(zad, nieToNumer):
     CmaxStart = calculate_Cmax(zad)
     index = -1
@@ -442,7 +479,7 @@ def selectX4(zad, nieToNumer):
 # _____________ MAIN _____________ #
 
 #zadania = loadData("data/data2.txt")
-zadania = loadDataB("dataB/ta010.txt")
+zadania = loadDataB("dataB/ta015.txt")
 
 print(" - - - NEH - - - ")
 print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
