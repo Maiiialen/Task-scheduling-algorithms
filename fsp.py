@@ -483,12 +483,12 @@ def algorytmSA(zad):
     L = n                   # L = {sqrt(n) | n | n^2}
     x = T/10**3             # x = {T/10^3 | T/10^4 | T/10^5}
     alfa = 0.97             # alfa = {0.97 | 0.95 | 0.90}
-    it = 0
+    it = 1
 
     while T > Tend:
         for k in range(1, L):
-            i = random.randint(1, n)
-            j = random.randint(1, n)
+            i = random.randint(0, n-1)
+            j = random.randint(0, n-1)
             pinew = moveInsert(copy.deepcopy(pi), i, j)
 
             piCmax = calculate_Cmax(pi)
@@ -533,7 +533,7 @@ print(" - - - NEH+ - - - ")
 print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
 
 print(" - - - SAA - - - ")
-print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
 
 
 
