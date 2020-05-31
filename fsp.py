@@ -321,7 +321,7 @@ def NEHplus(zad):
         pi = copy.deepcopy(pistar)
         poprzednioWybrane = Wsorted.pop()
 
-        x = selectX4(copy.deepcopy(pistar), poprzednioWybrane[1])
+        x = selectX4(copy.deepcopy(pistar), poprzednioWybrane[1])       ###
         pi.remove(x)
         for l in range(0, k):
             pi.insert(l, x)
@@ -336,7 +336,7 @@ def NEHplus(zad):
 
     return pistar
 
-def selectX1(zad, nieToNumer):
+def selectX1(zad, nieToNumer):      # Zadanie zawierające najdłuższą operacje na ścieżce krytycznej.
     C = calculate_C(zad)
     pMax = C[-1][-1]
     indeksZ = len(zad)-1
@@ -372,18 +372,7 @@ def selectX1(zad, nieToNumer):
 
     return zad[indeksZ]
 
-    '''
-    for i in range(len(zad)-1, 0, -1):
-        for j in range(len(zad[0])-2, 0, -1):
-            if i>0 and j>0:
-                if C[i-1][j] >= C[i][j-1]:
-                    if zad[i-1][j] > pMax:
-                        pMax = zad[i-1][j]
-                        indeksZ = i-1
-                        indeksM = j
-    '''
-
-def selectX2(zad, nieToNumer):
+def selectX2(zad, nieToNumer):      # Zadanie zawierające największą sumę operacji wchodzących w ścieżkę krytyczną.
     C = calculate_C(zad)
     sumaMax = 0
     suma = C[-1][-1]
@@ -420,7 +409,7 @@ def selectX2(zad, nieToNumer):
 
     return zad[indeksZ]
 
-def selectX3(zad, nieToNumer):
+def selectX3(zad, nieToNumer):      # Zadanie zawierające największą liczbę operacji wchodzących w ścieżkę krytyczną.
     C = calculate_C(zad)
     sumaMax = 0
     suma = 1
@@ -457,7 +446,7 @@ def selectX3(zad, nieToNumer):
 
     return zad[indeksZ]
 
-def selectX4(zad, nieToNumer):
+def selectX4(zad, nieToNumer):          # Zadanie, którego usunięcie spowoduję największe zmniejszenie wartości Cmax.
     CmaxStart = calculate_Cmax(zad)
     index = -1
 
@@ -482,14 +471,14 @@ def algorytmSA(zad):
     pi = copy.deepcopy(zad) # pi = {neutralna | losowa | NEH}
     L = n                   # L = {sqrt(n) | n | n^2}
     x = T/10**3             # x = {T/10^3 | T/10^4 | T/10^5}
-    alfa = 0.97             # alfa = {0.97 | 0.95 | 0.90}
+    alfa = 0.95             # alfa = {0.97 | 0.95 | 0.90}
     it = 1
 
     while T > Tend:
         for k in range(1, L):
             i = random.randint(0, n-1)
             j = random.randint(0, n-1)
-            pinew = moveInsert(copy.deepcopy(pi), i, j)
+            pinew = moveInsert(copy.deepcopy(pi), i, j)     ###
 
             piCmax = calculate_Cmax(pi)
             pinewCmax = calculate_Cmax(pinew)
@@ -507,7 +496,7 @@ def algorytmSA(zad):
         #T = T - x
         #T = alfa*T
         T = T/(math.log(it+1))
-
+        
         it += 1
 
     return pistar
@@ -524,18 +513,209 @@ def moveInsert(zad, i, j):
 # _____________ MAIN _____________ #
 
 #zadania = loadData("data/data2.txt")
-zadania = loadDataB("dataB/ta015.txt")
 
-print(" - - - NEH - - - ")
-print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
 
-print(" - - - NEH+ - - - ")
-print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
-
+print(" - - - - ta050 - - - - ")
+zadania = loadDataB("dataB/ta050.txt")
 print(" - - - SAA - - - ")
 print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
 
 
+'''
+print(" - - - - ta041 - - - - ")
+zadania = loadDataB("dataB/ta041.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta042 - - - - ")
+zadania = loadDataB("dataB/ta042.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta043 - - - - ")
+zadania = loadDataB("dataB/ta043.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta044 - - - - ")
+zadania = loadDataB("dataB/ta044.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta045 - - - - ")
+zadania = loadDataB("dataB/ta045.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta046 - - - - ")
+zadania = loadDataB("dataB/ta046.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta047 - - - - ")
+zadania = loadDataB("dataB/ta047.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta048 - - - - ")
+zadania = loadDataB("dataB/ta048.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta049 - - - - ")
+zadania = loadDataB("dataB/ta049.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta050 - - - - ")
+zadania = loadDataB("dataB/ta050.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n ----------------------------------------------------------------")
+print("\n - - - - ta001 - - - - ")
+zadania = loadDataB("dataB/ta001.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta011 - - - - ")
+zadania = loadDataB("dataB/ta011.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta021 - - - - ")
+zadania = loadDataB("dataB/ta021.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta031 - - - - ")
+zadania = loadDataB("dataB/ta031.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta041 - - - - ")
+zadania = loadDataB("dataB/ta041.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta051 - - - - ")
+zadania = loadDataB("dataB/ta051.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta061 - - - - ")
+zadania = loadDataB("dataB/ta061.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta071 - - - - ")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta081 - - - - ")
+zadania = loadDataB("dataB/ta081.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta091 - - - - ")
+zadania = loadDataB("dataB/ta091.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta101 - - - - ")
+zadania = loadDataB("dataB/ta101.txt")
+print(" - - - NEH - - - ")
+print(calculate_Cmax(NEH(copy.deepcopy(zadania))))
+print(" - - - NEH+ - - - ")
+print(calculate_Cmax(NEHplus(copy.deepcopy(zadania))))
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+
+print("\n - - - - ta111 - - - - ")
+zadania = loadDataB("dataB/ta111.txt")
+print(" - - - SAA - - - ")
+print(calculate_Cmax(algorytmSA(copy.deepcopy(zadania))))
+'''
 
 ''' CZESC 1: BruteForce, Johnson, BnB
 # - - - DATA 1 - - - #
