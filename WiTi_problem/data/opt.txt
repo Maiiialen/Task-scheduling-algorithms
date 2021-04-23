@@ -1,0 +1,11 @@
+data10	1004
+data11	962
+data12	915
+data13	681
+data14	646
+data15	310
+data16	321
+data17	746
+data18	539
+data19	688
+data20	514
